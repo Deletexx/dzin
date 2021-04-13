@@ -1,0 +1,24 @@
+#main_box {
+    -fx-background-color: transparent;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-width: 2;
+    -fx-border-color: #414141;
+    -fx-effect: dropshadow(gaussian, rgba(41, 41, 41, 1.0), 10, 0.5, 0.0, 4.0);
+}
+
+#title_bar {
+    -fx-background-color: #414141;
+    -fx-background-radius: 6 6 0 0;
+    -fx-border-radius: 6 6 0 0;
+}
+
+#text_area_container {
+    -fx-background-color: #C4C4C4;
+    -fx-background-radius: 0 0 4 4;
+    -fx-border-radius: 0 0 4 4;
+}
+
+#menu_bar {
+    -fx-background-color: #C4C4C4;
+}
