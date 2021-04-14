@@ -1,24 +1,71 @@
 #main_box {
     -fx-background-color: transparent;
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
-    -fx-border-width: 2;
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+    -fx-border-width: 2.5;
     -fx-border-color: #414141;
-    -fx-effect: dropshadow(gaussian, rgba(41, 41, 41, 1.0), 10, 0.5, 0.0, 4.0);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 6, 0.5, 0.0, 4.0);
 }
 
 #title_bar {
     -fx-background-color: #414141;
-    -fx-background-radius: 6 6 0 0;
-    -fx-border-radius: 6 6 0 0;
+    -fx-background-radius: 7 7 0 0;
+    -fx-border-radius: 7 7 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(65, 65, 65, 1), 4, 0.5, 0.0, -2.0);
 }
 
 #text_area_container {
     -fx-background-color: #C4C4C4;
     -fx-background-radius: 0 0 4 4;
     -fx-border-radius: 0 0 4 4;
+    -fx-effect: innershadow(gaussian, rgba( 65, 65, 65, 1.0 ), 4, 0, 0.0, 4.0 );
 }
 
 #menu_bar {
     -fx-background-color: #C4C4C4;
+    -fx-effect: innershadow(gaussian, rgba( 65, 65, 65, 1.0 ), 5, 0, 0.0, -2.0 );
+}
+
+#close_btn {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+#minimize_btn {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+#message_area_input {
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-effect: dropshadow(gaussian, rgba(65, 65, 65, 1.0), 5, 0.3, 0.0, 3.0);
+}
+
+#message_scroll_pane {
+    -fx-background-color: transparent;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+}
+
+#outer_pane {
+    -fx-background-color: transparent;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.message_container {
+    -fx-background-color: white;
+    -fx-effect: innershadow(gaussian, rgba( 0, 0, 0, 0.25 ), 10, 0, 0.0, 4.0 );
 }

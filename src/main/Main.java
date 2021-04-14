@@ -1,11 +1,15 @@
 package main;
 
+import afester.javafx.svg.SvgLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.io.InputStream;
 
 public class Main extends Application {
 
