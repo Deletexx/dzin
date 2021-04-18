@@ -31,6 +31,11 @@
     -fx-padding: 0;
 }
 
+#menu_btn {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
 #minimize_btn {
     -fx-background-color: transparent;
     -fx-padding: 0;

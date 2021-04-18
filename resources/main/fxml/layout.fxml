@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <Pane id="outer_pane" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
    <children>
       <VBox id="main_box" alignment="CENTER" layoutX="11.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="406.0" prefWidth="610.0" stylesheets="@../css/style.css">
@@ -34,7 +33,7 @@
             </HBox>
             <AnchorPane id="menu_bar" prefHeight="36.0" prefWidth="600.0" VBox.vgrow="NEVER">
                <children>
-                  <Button layoutX="2.0" layoutY="6.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="|||" AnchorPane.leftAnchor="5.0" />
+                  <Button id="menu_btn" fx:id="menuBtn" layoutX="2.0" layoutY="6.0" mnemonicParsing="false" onAction="#clickMenu" prefHeight="25.0" prefWidth="25.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="5.0" />
                   <Label layoutX="558.0" layoutY="10.0" text="\@Test" AnchorPane.rightAnchor="8.0" />
                </children>
                <VBox.margin>
@@ -87,7 +86,7 @@
             </ScrollPane>
             <AnchorPane id="text_area_container" maxHeight="150.0" prefHeight="47.0" prefWidth="596.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <TextArea id="message_area_input" layoutX="16.0" layoutY="7.0" maxHeight="150.0" minHeight="25.0" prefHeight="25.0" prefWidth="568.0" wrapText="true" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="13.0" />
+                  <TextArea id="message_area_input" fx:id="messageTextArea" layoutX="16.0" layoutY="7.0" maxHeight="150.0" minHeight="25.0" prefHeight="25.0" prefWidth="568.0" promptText="│" text="Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ut bibendum est. Suspendisse eros tortor, euismod ac lorem id, blandit feugiat arcu. Quisque eu ex viverra, interdum quam ac, molestie urna. Donec porta, tellus et bibendum sagittis, ex augue eleifend erat, in mollis ante metus posuere ex." wrapText="true" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="13.0" />
                </children>
                <VBox.margin>
                   <Insets />

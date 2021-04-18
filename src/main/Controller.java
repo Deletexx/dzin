@@ -1,10 +1,13 @@
 package main;
 
 import afester.javafx.svg.SvgLoader;
+import javafx.beans.property.IntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.Console;
@@ -16,6 +19,10 @@ public class Controller {
     private Button closeBtn;
     @FXML
     private Button minimizeBtn;
+    @FXML
+    private Button menuBtn;
+    @FXML
+    private TextArea messageTextArea;
 
     @FXML
     private void clickClose(ActionEvent event) {
@@ -30,18 +37,23 @@ public class Controller {
     }
 
     @FXML
-    public void initialize(){
-        SvgLoader loader = new SvgLoader();
-        Group svgImageCloseBtn = loader.loadSvg(getClass().getResourceAsStream("img/x-mark.svg"));
-        Group graphic = new Group(svgImageCloseBtn);
-        svgImageCloseBtn.setScaleX(0.03);
-        svgImageCloseBtn.setScaleY(0.03);
-        closeBtn.setGraphic(graphic);
+    private void clickMenu(ActionEvent event) {
 
-        Group svgImageMinimizeBtn = loader.loadSvg(getClass().getResourceAsStream("img/minimize.svg"));
-        graphic = new Group(svgImageMinimizeBtn);
-        svgImageMinimizeBtn.setScaleX(0.03);
-        svgImageMinimizeBtn.setScaleY(0.03);
-        minimizeBtn.setGraphic(graphic);
+    }
+
+    private SvgLoader loader = new SvgLoader();
+    private Group svgToGroup(String path, double scaleX, double scaleY){
+        Group svgImageCloseBtn = loader.loadSvg(getClass().getResourceAsStream(path));
+        Group graphic = new Group(svgImageCloseBtn);
+        svgImageCloseBtn.setScaleX(scaleX);
+        svgImageCloseBtn.setScaleY(scaleY);
+        return graphic;
+    }
+
+    @FXML
+    public void initialize(){
+        closeBtn.setGraphic(svgToGroup("img/x-mark.svg", 0.03, 0.03));
+        minimizeBtn.setGraphic(svgToGroup("img/minimize.svg", 0.03, 0.03));
+        menuBtn.setGraphic(svgToGroup("img/menu.svg", 0.06, 0.06));
     }
 }
