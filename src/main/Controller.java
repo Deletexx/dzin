@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.InlineCssTextArea;
 import org.reactfx.inhibeans.property.SimpleIntegerProperty;
@@ -24,6 +25,9 @@ public class Controller {
     private Button menuBtn;
     @FXML
     private AnchorPane messageBoxContainer;
+    @FXML
+    private HBox titleBar;
+
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -93,6 +97,18 @@ public class Controller {
         messageBoxContainer.getChildren().add(messageTextArea);
     }
 
+    private void setWindowMovable(){
+        titleBar.setOnMousePressed(e -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+
+        titleBar.setOnMouseDragged(e -> {
+            Stage stage = (Stage) titleBar.getScene().getWindow();
+            stage.setX(e.getScreenX() - xOffset);
+            stage.setY(e.getScreenY() - yOffset);
+        });
+    }
     @FXML
     public void initialize(){
         closeBtn.setGraphic(svgToGroup("img/x-mark.svg", 0.03, 0.03));
@@ -100,5 +116,6 @@ public class Controller {
         menuBtn.setGraphic(svgToGroup("img/menu.svg", 0.06, 0.06));
 
         initializeMessageTextArea();
+        setWindowMovable();
     }
 }

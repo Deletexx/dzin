@@ -13,7 +13,7 @@
    <children>
       <VBox id="main_box" alignment="CENTER" layoutX="11.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="406.0" prefWidth="610.0" stylesheets="@../css/style.css">
          <children>
-            <HBox id="title_bar" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="600.0" VBox.vgrow="NEVER">
+            <HBox id="title_bar" fx:id="titleBar" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="600.0" VBox.vgrow="NEVER">
                <children>
                   <Button id="minimize_btn" fx:id="minimizeBtn" mnemonicParsing="false" onAction="#clickMinimize" prefHeight="25.0" prefWidth="25.0" styleClass="title_button">
                      <HBox.margin>
