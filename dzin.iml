@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="com.github.afester.javafx:FranzXaver:0.1" level="project" />
+    <orderEntry type="library" name="org.fxmisc.richtext:richtextfx:0.10.6" level="project" />
   </component>
 </module>
