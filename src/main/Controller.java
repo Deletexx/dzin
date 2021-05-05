@@ -2,18 +2,15 @@ package main;
 
 import afester.javafx.svg.SvgLoader;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.InlineCssTextArea;
-import org.reactfx.inhibeans.property.SimpleIntegerProperty;
-
-import java.util.Arrays;
 
 public class Controller {
 
@@ -22,12 +19,25 @@ public class Controller {
     @FXML
     private Button minimizeBtn;
     @FXML
-    private Button menuBtn;
+    private ToggleButton chatMenuTgl;
+    @FXML
+    private ToggleButton addChatPaneTgl;
     @FXML
     private AnchorPane messageBoxContainer;
     @FXML
     private HBox titleBar;
+    @FXML
+    private VBox chatList;
+    @FXML
+    private VBox messageStack;
+    @FXML
+    private ScrollPane chatListScrollPane;
+    @FXML
+    private AnchorPane addChatMenuPane;
 
+    private ChatList chats;
+    private double chatListMenuWidth = 350.0;
+    private double addChatMenuHeight = 70.0;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -44,6 +54,10 @@ public class Controller {
     private void clickMinimize(ActionEvent event) {
         Stage stage = (Stage) closeBtn.getScene().getWindow();
         stage.setIconified(true);
+    }
+    @FXML
+    private void addNewChatPane(ActionEvent event) {
+
     }
 
     @FXML
@@ -109,13 +123,44 @@ public class Controller {
             stage.setY(e.getScreenY() - yOffset);
         });
     }
+    private void initializeChatMenu(){
+        chatList.prefWidthProperty().bind(chatListScrollPane.prefWidthProperty());
+        chatMenuTgl.selectedProperty().addListener((o, oldVal, newVal) -> {
+            if (newVal) {
+                chatListScrollPane.setPrefWidth(chatListMenuWidth);
+                if (addChatPaneTgl.isSelected()) {
+                    addChatMenuPane.setPrefWidth(chatListMenuWidth);
+                    addChatMenuPane.setPrefHeight(addChatMenuHeight);
+                }
+            } else {
+                chatListScrollPane.setPrefWidth(0.0);
+                addChatMenuPane.setPrefWidth(0.0);
+                addChatMenuPane.setPrefHeight(0.0);
+            }
+        });
+        addChatPaneTgl.disableProperty().bind(chatMenuTgl.selectedProperty().not());
+        addChatPaneTgl.visibleProperty().bind(chatMenuTgl.selectedProperty());
+        addChatPaneTgl.selectedProperty().addListener((o, oldVal, newVal) -> {
+            if (newVal && chatMenuTgl.isSelected()) {
+                addChatMenuPane.setPrefWidth(chatListMenuWidth);
+                addChatMenuPane.setPrefHeight(addChatMenuHeight);
+                chatListScrollPane.setPrefHeight(chatListScrollPane.getPrefHeight() - addChatMenuHeight);
+            } else if (!newVal) {
+                addChatMenuPane.setPrefWidth(0.0);
+                addChatMenuPane.setPrefHeight(0.0);
+                chatListScrollPane.setPrefHeight(chatListScrollPane.getPrefHeight() + addChatMenuHeight);
+            }
+        });
+
+    }
     @FXML
     public void initialize(){
         closeBtn.setGraphic(svgToGroup("img/x-mark.svg", 0.03, 0.03));
         minimizeBtn.setGraphic(svgToGroup("img/minimize.svg", 0.03, 0.03));
-        menuBtn.setGraphic(svgToGroup("img/menu.svg", 0.06, 0.06));
-
+        chatMenuTgl.setGraphic(svgToGroup("img/menu.svg", 0.06, 0.06));
+        addChatPaneTgl.setGraphic(svgToGroup("img/add.svg", 0.05, 0.05));
         initializeMessageTextArea();
         setWindowMovable();
+        initializeChatMenu();
     }
 }
