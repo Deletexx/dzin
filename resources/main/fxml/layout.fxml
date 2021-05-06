@@ -48,8 +48,8 @@
                      <children>
                         <AnchorPane id="add_chat_menu_pane" fx:id="addChatMenuPane" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
                            <children>
-                              <TextField layoutX="-17.0" layoutY="14.0" minHeight="0.0" minWidth="0.0" visible="false" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0" />
-                              <TextField editable="false" layoutX="-7.0" layoutY="24.0" minHeight="0.0" minWidth="0.0" visible="false" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                              <TextField fx:id="usernameInput" layoutX="-17.0" layoutY="14.0" minHeight="0.0" minWidth="0.0" prefHeight="23.0" promptText="username" styleClass="menu_input" visible="false" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="10.0" />
+                              <TextField fx:id="nicknameInput" layoutX="-7.0" layoutY="24.0" minHeight="0.0" minWidth="0.0" prefHeight="23.0" promptText="nickname" styleClass="menu_input" visible="false" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="6.0" />
                            </children>
                         </AnchorPane>
                         <ScrollPane id="chat_list_scroll_pane" fx:id="chatListScrollPane" hbarPolicy="NEVER" minWidth="0.0" prefHeight="292.0" prefWidth="0.0" vbarPolicy="NEVER">

@@ -135,3 +135,9 @@
     -fx-border-width: 0;
     -fx-padding: 0;
 }
+
+.menu_input {
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}

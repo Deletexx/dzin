@@ -34,8 +34,12 @@ public class Controller {
     private ScrollPane chatListScrollPane;
     @FXML
     private AnchorPane addChatMenuPane;
+    @FXML
+    private TextField usernameInput;
+    @FXML
+    private TextField nicknameInput;
 
-    private ChatList chats;
+    private ChatList chats = new ChatList("Test");
     private double chatListMenuWidth = 350.0;
     private double addChatMenuHeight = 70.0;
 
@@ -79,6 +83,8 @@ public class Controller {
         AnchorPane.setRightAnchor(messageTextArea, 16.0);
         AnchorPane.setTopAnchor(messageTextArea, 13.0);
         AnchorPane.setBottomAnchor(messageTextArea, 11.0);
+        //Text placeholderText = new Text("Write a message...");
+        //messageTextArea.setPlaceholder(placeholderText);
         messageTextArea.setWrapText(true);
         messageTextArea.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
@@ -123,35 +129,68 @@ public class Controller {
             stage.setY(e.getScreenY() - yOffset);
         });
     }
+
+    private void setEnabledAddChatMenu(boolean b) {
+        if (b) {
+            addChatMenuPane.setPrefWidth(chatListMenuWidth);
+            addChatMenuPane.setPrefHeight(addChatMenuHeight);
+        } else {
+            addChatMenuPane.setPrefWidth(0.0);
+            addChatMenuPane.setPrefHeight(0.0);
+        }
+        usernameInput.setDisable(!b);
+        usernameInput.setVisible(b);
+        nicknameInput.setDisable(!b);
+        nicknameInput.setVisible(b);
+    }
+    private void confirmAddChatMenuFields() {
+        if (!usernameInput.getText().isEmpty()) {
+            if (nicknameInput.getText().isEmpty()) {
+                chats.add(usernameInput.getText(), usernameInput.getText());
+            } else {
+                chats.add(usernameInput.getText(), nicknameInput.getText());
+            }
+            usernameInput.clear();
+            nicknameInput.clear();
+            System.out.println(chats.chatList.toString());
+        }
+    }
     private void initializeChatMenu(){
         chatList.prefWidthProperty().bind(chatListScrollPane.prefWidthProperty());
         chatMenuTgl.selectedProperty().addListener((o, oldVal, newVal) -> {
             if (newVal) {
                 chatListScrollPane.setPrefWidth(chatListMenuWidth);
                 if (addChatPaneTgl.isSelected()) {
-                    addChatMenuPane.setPrefWidth(chatListMenuWidth);
-                    addChatMenuPane.setPrefHeight(addChatMenuHeight);
+                    setEnabledAddChatMenu(true);
                 }
             } else {
                 chatListScrollPane.setPrefWidth(0.0);
-                addChatMenuPane.setPrefWidth(0.0);
-                addChatMenuPane.setPrefHeight(0.0);
+                setEnabledAddChatMenu(false);
             }
         });
         addChatPaneTgl.disableProperty().bind(chatMenuTgl.selectedProperty().not());
         addChatPaneTgl.visibleProperty().bind(chatMenuTgl.selectedProperty());
         addChatPaneTgl.selectedProperty().addListener((o, oldVal, newVal) -> {
             if (newVal && chatMenuTgl.isSelected()) {
-                addChatMenuPane.setPrefWidth(chatListMenuWidth);
-                addChatMenuPane.setPrefHeight(addChatMenuHeight);
+                setEnabledAddChatMenu(true);
                 chatListScrollPane.setPrefHeight(chatListScrollPane.getPrefHeight() - addChatMenuHeight);
             } else if (!newVal) {
-                addChatMenuPane.setPrefWidth(0.0);
-                addChatMenuPane.setPrefHeight(0.0);
+                setEnabledAddChatMenu(false);
                 chatListScrollPane.setPrefHeight(chatListScrollPane.getPrefHeight() + addChatMenuHeight);
             }
         });
-
+        usernameInput.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                e.consume();
+                confirmAddChatMenuFields();
+            }
+        });
+        nicknameInput.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                e.consume();
+                confirmAddChatMenuFields();
+            }
+        });
     }
     @FXML
     public void initialize(){
