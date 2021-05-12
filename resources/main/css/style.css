@@ -1,3 +1,7 @@
+.root {
+    -fx-font-family: Arial;
+}
+
 #main_box {
     -fx-background-color: transparent;
     -fx-background-radius: 7;
@@ -55,7 +59,7 @@
     -fx-background-color: #C4C4C4;
     -fx-border-width: 0;
     -fx-effect: innershadow(gaussian, rgba( 65, 65, 65, 0.75 ), 4, 0, -3.0, 0.0 );
-    -fx-padding: 0;
+    -fx-padding: 4 0 0 0;
 }
 
 #minimize_btn {
@@ -81,6 +85,7 @@
     -fx-background-radius: 7;
     -fx-border-width: 0;
     -fx-padding: 0;
+    -fx-effect: innershadow(gaussian, rgba( 65, 65, 65, 1 ), 4, 0, 0.0, 1.0 );
 }
 
 #outer_pane {
@@ -100,9 +105,8 @@
 }
 
 .message_container {
-    -fx-background-color: white;
     -fx-border-width: 0;
-    -fx-effect: innershadow(gaussian, rgba( 0, 0, 0, 0.25 ), 10, 0, 0.0, 4.0 );
+    -fx-effect: innershadow(gaussian, rgba( 0, 0, 0, 0.25 ), 10, 0, 0.0, -4.0 );
 }
 
 .title_button {
@@ -140,4 +144,16 @@
     -fx-background-color: white;
     -fx-background-radius: 6;
     -fx-border-radius: 6;
+}
+
+.chat_menu_pane {
+    -fx-background-color: #414141;
+    -fx-effect: dropshadow(gaussian, rgba(65, 65, 65, 1.0), 5, 0.3, -1.5, 3.0);
+    -fx-padding: 3 0 3 6;
+}
+
+.chat_menu_pane_selected {
+    -fx-background-color: #F4F4F4;
+    -fx-effect: dropshadow(gaussian, rgba(65, 65, 65, 1.0), 5, 0.3, -1.5, 3.0);
+    -fx-padding: 3 0 3 6;
 }

@@ -34,9 +34,9 @@
             </HBox>
             <AnchorPane id="menu_bar" prefHeight="36.0" prefWidth="600.0" VBox.vgrow="NEVER">
                <children>
-                  <Label layoutX="556.0" layoutY="7.0" text="\@Test" AnchorPane.rightAnchor="13.0" />
+                  <Label fx:id="chatLabel" layoutX="554.0" layoutY="10.0" AnchorPane.rightAnchor="14.0" />
                   <ToggleButton id="chat_menu_toggler" fx:id="chatMenuTgl" ellipsisString="" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="5.0" />
-                  <ToggleButton id="add_chat_pane_tgl" fx:id="addChatPaneTgl" ellipsisString="" mnemonicParsing="false" onAction="#addNewChatPane" prefHeight="25.0" prefWidth="25.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="33.0" />
+                  <ToggleButton id="add_chat_pane_tgl" fx:id="addChatPaneTgl" ellipsisString="" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="33.0" />
                </children>
                <VBox.margin>
                   <Insets />

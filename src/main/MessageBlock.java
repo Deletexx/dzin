@@ -1,8 +1,14 @@
 package main;
 
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
+import javafx.scene.text.TextFlow;
 
 import java.util.Date;
 
@@ -12,15 +18,25 @@ public class MessageBlock {
         this.date = date;
         this.isClient = isClient;
         anchorPane = new AnchorPane();
-        Label textLabel = new Label(text);
+        Text messageText = new Text('\n' + text);
+        messageText.setWrappingWidth(560.0);
+        messageText.wrappingWidthProperty().bind(anchorPane.widthProperty().subtract(45.0));
+        messageText.setLineSpacing(2.0);
+        messageText.setStyle("-fx-font-size: 13");
+        Pane textPane = new Pane();
+        AnchorPane.setLeftAnchor(textPane, 23.0);
+        AnchorPane.setTopAnchor(textPane, 5.0);
+        textPane.getChildren().add(messageText);
         if (isClient) {
-            anchorPane.getChildren().add(textLabel);
-            textLabel.setPadding(new Insets(8, 50, 8, 15));
+            anchorPane.setStyle("-fx-background-color: white");
         } else {
-            AnchorPane.setRightAnchor(textLabel, 0.0);
-            textLabel.setPadding(new Insets(8, 15, 8, 50));
+            messageText.setFill(Color.WHITE);
+            anchorPane.setStyle("-fx-background-color: #414141");
         }
-        anchorPane.getChildren().add(textLabel);
+        anchorPane.getStyleClass().add("message_container");
+        anchorPane.prefHeightProperty().bind(textPane.prefHeightProperty());
+        anchorPane.getChildren().add(textPane);
+        anchorPane.setOnMouseClicked(e -> System.out.println(anchorPane.getWidth()));
     }
     private String text;
     private Date date;
