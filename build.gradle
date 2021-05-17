@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+application {
+    mainClassName='main.Main'
+}
+
+dependencies {
+    implementation group: 'com.github.afester.javafx', name: 'FranzXaver', version: '0.1'
+    implementation group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.10.6'
+}
+
+javafx {
+    version='11.0.2'
+    modules=['javafx.controls', 'javafx.fxml']
+}
+
+repositories {
+    mavenCentral()
+}
