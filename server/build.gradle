@@ -9,6 +9,7 @@ application {
 
 dependencies {
     implementation group: 'com.bladejava', name: 'blade-mvc', version: '2.0.15.RELEASE'
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.34.0'
 }
 
 repositories {

@@ -68,7 +68,7 @@ public class Controller {
         stage.setIconified(true);
     }
 
-    private SvgLoader loader = new SvgLoader();
+    private final SvgLoader loader = new SvgLoader();
     private Group svgToGroup(String path, double scaleX, double scaleY){
         Group svgImageCloseBtn = loader.loadSvg(getClass().getResourceAsStream(path));
         Group graphic = new Group(svgImageCloseBtn);
@@ -243,21 +243,33 @@ public class Controller {
         });
     }
     private void initializeLoginDialog() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("css/dialog.css").toExternalForm());
-        dialog.setTitle("Login");
-        dialog.setContentText("Enter your username:");
-        dialog.setHeaderText("Login");
+        Dialog<UserData> dialog = new Dialog<>();
         dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.getDialogPane().setGraphic(new Pane());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("css/dialog.css").toExternalForm());
         setWindowMovable(dialog.getDialogPane());
         dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
         ((Stage)dialog.getDialogPane().getScene().getWindow()).initStyle(StageStyle.TRANSPARENT);
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresentOrElse(name -> {
-            if (!name.isEmpty()) {
-                chats = new ChatList(name);
-            } else Platform.exit();
+        dialog.setTitle("Login");
+        dialog.setHeaderText("Enter your login credentials");
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("Username");
+        TextField passwordField = new TextField();
+        passwordField.setPromptText("Password");
+        dialogPane.setContent(new VBox(8, usernameField, passwordField));
+        Platform.runLater(usernameField::requestFocus);
+        dialog.setResultConverter((ButtonType button) -> {
+            if (button == ButtonType.OK) {
+                if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) return null;
+                return new UserData(usernameField.getText(), passwordField.getText());
+            }
+            Platform.exit();
+            return null;
+        });
+        Optional<UserData> optionalResult = dialog.showAndWait();
+        optionalResult.ifPresentOrElse((UserData results) -> {
+            System.out.println(results.getUsername() + " " + results.getPassword());
         }, Platform::exit);
     }
 
