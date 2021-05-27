@@ -14,8 +14,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.ServerResponse;
 import org.fxmisc.richtext.InlineCssTextArea;
 
+import java.io.*;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -242,39 +244,63 @@ public class Controller {
             }
         });
     }
+
     private void initializeLoginDialog() {
-        Dialog<UserData> dialog = new Dialog<>();
-        dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("css/dialog.css").toExternalForm());
-        setWindowMovable(dialog.getDialogPane());
-        dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
-        ((Stage)dialog.getDialogPane().getScene().getWindow()).initStyle(StageStyle.TRANSPARENT);
-        dialog.setTitle("Login");
-        dialog.setHeaderText("Enter your login credentials");
-        DialogPane dialogPane = dialog.getDialogPane();
-        dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("Username");
-        TextField passwordField = new TextField();
-        passwordField.setPromptText("Password");
-        dialogPane.setContent(new VBox(8, usernameField, passwordField));
-        Platform.runLater(usernameField::requestFocus);
-        dialog.setResultConverter((ButtonType button) -> {
-            if (button == ButtonType.OK) {
-                if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) return null;
-                return new UserData(usernameField.getText(), passwordField.getText());
-            }
-            Platform.exit();
-            return null;
-        });
-        Optional<UserData> optionalResult = dialog.showAndWait();
-        optionalResult.ifPresentOrElse((UserData results) -> {
-            System.out.println(results.getUsername() + " " + results.getPassword());
-        }, Platform::exit);
+        AtomicReference<Boolean> userIsVerified = new AtomicReference<>(false);
+        do {
+            Dialog<Client> dialog = new Dialog<>();
+            dialog.initStyle(StageStyle.UNDECORATED);
+            dialog.getDialogPane().getStylesheets().add(getClass().getResource("css/dialog.css").toExternalForm());
+            setWindowMovable(dialog.getDialogPane());
+            dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+            ((Stage)dialog.getDialogPane().getScene().getWindow()).initStyle(StageStyle.TRANSPARENT);
+            dialog.setTitle("Login");
+            dialog.setHeaderText("Enter your credentials");
+            DialogPane dialogPane = dialog.getDialogPane();
+            dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+            TextField usernameField = new TextField();
+            usernameField.setPromptText("Username");
+            TextField passwordField = new TextField();
+            passwordField.setPromptText("Password");
+            dialogPane.setContent(new VBox(8, usernameField, passwordField));
+            Platform.runLater(usernameField::requestFocus);
+            dialog.setResultConverter((ButtonType button) -> {
+                if (button == ButtonType.OK) {
+                    if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) return null;
+                    return new Client(usernameField.getText(), passwordField.getText());
+                }
+                Platform.exit();
+                System.exit(0);
+                return null;
+            });
+            Optional<Client> optionalResult = dialog.showAndWait();
+            optionalResult.ifPresentOrElse((Client result) -> {
+                try {
+                    switch(Client.verifyCredentials()) {
+                        case USER_VERIFIED:
+                            chats = new ChatList();
+                            userIsVerified.set(true);
+                            System.out.println(Client.getUsername() + " " + Client.getPassword());
+                            break;
+                        case WRONG_PASSWORD:
+                            System.out.println("Wrong password");
+                            break;
+                        case USER_DOES_NOT_EXIST:
+                            if (Client.createUser() != ServerResponse.USER_ALREADY_EXIST) {
+                                userIsVerified.set(true);
+                            }
+                            break;
+                    }
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }, Platform::exit);
+        } while (!userIsVerified.get());
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() throws IOException {
+        initializeLoginDialog();
         closeBtn.setGraphic(svgToGroup("img/x-mark.svg", 0.03, 0.03));
         minimizeBtn.setGraphic(svgToGroup("img/minimize.svg", 0.03, 0.03));
         chatMenuTgl.setGraphic(svgToGroup("img/menu.svg", 0.06, 0.06));
@@ -282,6 +308,7 @@ public class Controller {
         initializeMessageTextArea();
         setWindowMovable(titleBar);
         initializeChatMenu();
-        initializeLoginDialog();
+//        Client.connect("127.0.0.1", 8080);
+//        Client.startSocketClient(this);
     }
 }

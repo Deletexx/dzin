@@ -4,12 +4,16 @@ plugins {
 }
 
 application {
-    mainClassName='main.Main'
+    mainClassName='main.Server'
 }
 
 dependencies {
-    implementation group: 'com.bladejava', name: 'blade-mvc', version: '2.0.15.RELEASE'
-    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.34.0'
+    implementation group: 'org.dizitart', name: 'nitrite', version: '3.4.3'
+    implementation "com.sparkjava:spark-core:2.9.3"
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta4'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 }
 
 repositories {

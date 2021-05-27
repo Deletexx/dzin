@@ -14,7 +14,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("fxml/layout.fxml"));
         Scene mainScene = new Scene(root);
         mainScene.setFill(Color.TRANSPARENT);
-        primaryStage.setTitle("Dzin");
+        primaryStage.setTitle("DZIN");
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(mainScene);
         primaryStage.show();
