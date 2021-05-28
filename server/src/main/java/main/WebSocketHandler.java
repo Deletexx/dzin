@@ -1,5 +1,6 @@
 package main;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -32,7 +33,8 @@ public class WebSocketHandler {
     }
 
     @OnWebSocketMessage
-    public void onMessage(Session user, InputStream stream) {
+    public void onMessage(Session user, byte[] buf, int offset, int length) {
         System.out.println(Server.userUsernameMap.get(user));
+        System.out.println((String)SerializationUtils.deserialize(buf));
     }
 }

@@ -15,9 +15,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.ServerResponse;
+import org.apache.commons.lang3.SerializationUtils;
 import org.fxmisc.richtext.InlineCssTextArea;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -86,6 +88,7 @@ public class Controller {
     private void sendMessage(MessageBlock message) {
         selectedChat.messageList.addLast(message);
         addMessageToVBox(message);
+        Client.webSocket.getConnection().send(SerializationUtils.serialize(message.getText()));
     }
 
     private void initializeMessageTextArea(){
@@ -101,7 +104,7 @@ public class Controller {
         messageTextArea.setWrapText(true);
         messageTextArea.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
-                e.consume(); // otherwise a new line will be added to the textArea after the sendFunction() call
+                e.consume();
                 if (e.isShiftDown()) {
                     messageTextArea.appendText(System.getProperty("line.separator"));
                 } else {
@@ -267,7 +270,11 @@ public class Controller {
             dialog.setResultConverter((ButtonType button) -> {
                 if (button == ButtonType.OK) {
                     if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) return null;
-                    return new Client(usernameField.getText(), passwordField.getText());
+                    try {
+                        return new Client(usernameField.getText(), passwordField.getText());
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
                 }
                 Platform.exit();
                 System.exit(0);
@@ -308,7 +315,8 @@ public class Controller {
         initializeMessageTextArea();
         setWindowMovable(titleBar);
         initializeChatMenu();
-//        Client.connect("127.0.0.1", 8080);
-//        Client.startSocketClient(this);
+        Client.setController(this);
+        Client.webSocket.connect();
+        System.out.println(Client.webSocket.getReadyState().name());
     }
 }

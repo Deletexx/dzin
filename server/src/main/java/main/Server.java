@@ -56,7 +56,7 @@ public class Server {
         //collection.insert(doc);
 
         port(8080);
-        webSocket("/", WebSocketHandler.class);
+        webSocket("/chat", WebSocketHandler.class);
         get("/from/*/to/*", (request, response) -> {
             return  "Hello " + request.splat()[0] + " and " + request.splat()[1];
         });

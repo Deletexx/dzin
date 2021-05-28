@@ -42,6 +42,9 @@ public class MessageBlock {
     private Date date;
     private AnchorPane anchorPane;
     private boolean isClient;
+    public String getText() {
+        return text;
+    }
     public AnchorPane getRootPane() {
         return anchorPane;
     }
