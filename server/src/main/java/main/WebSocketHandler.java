@@ -1,6 +1,10 @@
 package main;
 
-import org.apache.commons.lang3.SerializationUtils;
+import model.Message;
+import model.ServerResponse;
+import model.User;
+import static org.apache.commons.lang3.SerializationUtils.*;
+import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -10,7 +14,10 @@ import spark.utils.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -19,22 +26,45 @@ public class WebSocketHandler {
 
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
-        String username = "User" + Server.nextUserNumber++;
-        Server.userUsernameMap.put(user, username);
-        System.out.println("Server " + username + " joined the chat");
-        user.getRemote().sendString("hello client");
+        String username = user.getUpgradeRequest().getHeader("username");
+        String password = user.getUpgradeRequest().getHeader("password");
+
+        User u = Server.repositoryUsers.find(ObjectFilters.eq("username",
+                username)).firstOrDefault();
+        if (u == null || !u.isExpectedPassword(password) ||
+                Server.userUsernameMap.containsKey(username)) {
+            user.close(403, "Wrong credentials");
+        } else {
+            Server.userUsernameMap.put(username, user);
+            Server.userSessionMap.put(user, username);
+            System.out.println("Server " + username + " joined the chat");
+        }
     }
 
     @OnWebSocketClose
     public void onClose(Session user, int statusCode, String reason) {
-        String username = Server.userUsernameMap.get(user);
-        Server.userUsernameMap.remove(user);
+        String username = Server.userSessionMap.get(user);
+        Server.userUsernameMap.remove(username);
+        Server.userSessionMap.remove(user);
         System.out.println("Server " + username + " left the chat");
     }
 
     @OnWebSocketMessage
     public void onMessage(Session user, byte[] buf, int offset, int length) {
-        System.out.println(Server.userUsernameMap.get(user));
-        System.out.println((String)SerializationUtils.deserialize(buf));
+        Message message = deserialize(buf);
+        message.setSender(Server.userSessionMap.get(user));
+        System.out.printf("%s from %s to %s%n", message.getMessage(),
+                message.getSender(), message.getRecipient());
+        message.setDate(new Date());
+        Server.repositoryMessages.insert(message);
+        if (Server.userUsernameMap.containsKey(message.getRecipient())) {
+            try {
+                System.out.println("Message is sent");
+                Server.userUsernameMap.get(message.getRecipient()).getRemote()
+                        .sendBytes(ByteBuffer.wrap(serialize(message)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

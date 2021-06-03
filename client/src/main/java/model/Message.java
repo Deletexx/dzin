@@ -1,8 +1,9 @@
-package main;
+package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable {
     String message;
     String sender;
     String recipient;
@@ -12,8 +13,15 @@ public class Message {
         this.message = message;
         this.sender = sender;
         this.recipient = recipient;
-        this.date = new Date();
+        this.date = date;
     }
+
+    public Message(String message, String recipient) {
+        this.message = message;
+        this.recipient = recipient;
+    }
+
+    public Message() {}
 
     public String getMessage() {
         return message;
@@ -38,4 +46,8 @@ public class Message {
     public void setRecipient(String recipient) {
         this.recipient = recipient;
     }
+
+    public void setDate(Date date) { this.date = date; }
+
+    public Date getDate() {  return date; }
 }

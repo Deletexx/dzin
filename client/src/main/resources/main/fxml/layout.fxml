@@ -17,6 +17,7 @@
          <children>
             <HBox id="title_bar" fx:id="titleBar" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="600.0" VBox.vgrow="NEVER">
                <children>
+                  <Label fx:id="clientLabel" prefHeight="15.0" prefWidth="547.0" textFill="WHITE" />
                   <Button id="minimize_btn" fx:id="minimizeBtn" mnemonicParsing="false" onAction="#clickMinimize" prefHeight="25.0" prefWidth="25.0" styleClass="title_button">
                      <HBox.margin>
                         <Insets />
@@ -63,7 +64,7 @@
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <ScrollPane id="message_scroll_pane" fitToWidth="true" hbarPolicy="NEVER" prefHeight="202.0" prefWidth="604.0">
+                  <ScrollPane id="message_scroll_pane" fx:id="messageScrollPane" fitToWidth="true" hbarPolicy="NEVER" prefHeight="202.0" prefWidth="604.0">
                      <content>
                         <VBox id="message_stack" fx:id="messageStack" prefHeight="288.0" prefWidth="597.0" />
                      </content>

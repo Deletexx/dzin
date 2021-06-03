@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.scene.text.TextFlow;
+import model.Message;
 
 import java.util.Date;
 
@@ -36,7 +37,6 @@ public class MessageBlock {
         anchorPane.getStyleClass().add("message_container");
         anchorPane.prefHeightProperty().bind(textPane.prefHeightProperty());
         anchorPane.getChildren().add(textPane);
-        anchorPane.setOnMouseClicked(e -> System.out.println(anchorPane.getWidth()));
     }
     private String text;
     private Date date;
@@ -47,5 +47,8 @@ public class MessageBlock {
     }
     public AnchorPane getRootPane() {
         return anchorPane;
+    }
+    static public MessageBlock messageToMessageBlock(Message message, boolean isClient) {
+        return new MessageBlock(message.getMessage(), message.getDate(), isClient);
     }
 }

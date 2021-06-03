@@ -1,16 +1,21 @@
 package main;
 
-import java.util.LinkedList;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class ChatList {
-    public ChatList() {
-        chatList = new LinkedList();
-    }
-    public void add(String username, String nickname) {
-        chatList.addFirst(new Chat(username, nickname));
+    public ChatList() {}
+    public Chat getChat(String username) {
+        return map.getOrDefault(username, null);
     }
     public void add(Chat chat) {
-        chatList.addFirst(chat);
+        list.addFirst(chat);
+        map.put(chat.getUsername(), chat);
+        nicknameMap.put(chat.getUsername(), chat.getNickname());
     }
-    public LinkedList<Chat> chatList;
+
+    public ConcurrentHashMap<String, String> nicknameMap = new ConcurrentHashMap<>();
+    public ConcurrentHashMap<String, Chat> map = new ConcurrentHashMap<>();
+    public ConcurrentLinkedDeque<Chat> list = new ConcurrentLinkedDeque<>();
 }

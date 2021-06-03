@@ -8,29 +8,30 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Chat {
     public Chat(String username, String nickname) {
-        messageList = new LinkedList();
+        messageList = new ConcurrentLinkedDeque<>();
         this.username = username;
         this.nickname = nickname;
         chatPane = new AnchorPane();
-        paneText = new Label(nickname);
+        paneText = new Label(nickname.equals(username) ? "@" + username : nickname);
         paneText.setAlignment(Pos.CENTER);
         paneText.setTextFill(Color.WHITE);
         paneText.setPadding(new Insets(6, 0,0,3));
         AnchorPane.setLeftAnchor(paneText, 0.0);
-        //AnchorPane.setRightAnchor(hyperlink, 0.0);
         chatPane.getChildren().add(paneText);
         chatPane.getStyleClass().add("chat_menu_pane");
     }
     public Chat() {
-        messageList = new LinkedList();
+        messageList = new ConcurrentLinkedDeque<>();
         chatPane = new AnchorPane();
         this.nickname = "";
         paneText = new Label(this.nickname);
+        this.username = "";
     }
-    public LinkedList<MessageBlock> messageList;
+    public ConcurrentLinkedDeque<MessageBlock> messageList;
     private Pane chatPane;
     private Label paneText;
     private String username;
@@ -38,6 +39,9 @@ public class Chat {
 
     public Pane getChatPane() {
         return chatPane;
+    }
+    public void addMessage(MessageBlock message) {
+        messageList.add(message);
     }
 
     public void setSelectedStyle(boolean b) {
