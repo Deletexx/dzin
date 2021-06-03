@@ -30,7 +30,7 @@ public class WebSocketHandler {
         } else {
             Server.userUsernameMap.put(username, user);
             Server.userSessionMap.put(user, username);
-            System.out.println("Server " + username + " joined the chat");
+            System.out.println("User " + username + " joined the chat");
         }
     }
 
@@ -39,20 +39,19 @@ public class WebSocketHandler {
         String username = Server.userSessionMap.get(user);
         Server.userUsernameMap.remove(username);
         Server.userSessionMap.remove(user);
-        System.out.println("Server " + username + " left the chat");
+        System.out.println("User " + username + " left the chat");
     }
 
     @OnWebSocketMessage
     public void onMessage(Session user, byte[] buf, int offset, int length) {
         Message message = deserialize(buf);
         message.setSender(Server.userSessionMap.get(user));
-        System.out.printf("%s from %s to %s%n", message.getMessage(),
+        System.out.printf("Message \"%s\" is sent from %s to %s%n", message.getMessage(),
                 message.getSender(), message.getRecipient());
         message.setDate(new Date());
         Server.repositoryMessages.insert(message);
         if (Server.userUsernameMap.containsKey(message.getRecipient())) {
             try {
-                System.out.println("Message is sent");
                 Server.userUsernameMap.get(message.getRecipient()).getRemote()
                         .sendBytes(ByteBuffer.wrap(serialize(message)));
             } catch (IOException e) {
