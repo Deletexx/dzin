@@ -1,14 +1,10 @@
 package main;
 
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
-import javafx.scene.text.TextFlow;
 import model.Message;
 
 import java.util.Date;

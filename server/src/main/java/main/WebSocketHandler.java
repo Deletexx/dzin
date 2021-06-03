@@ -1,7 +1,6 @@
 package main;
 
 import model.Message;
-import model.ServerResponse;
 import model.User;
 import static org.apache.commons.lang3.SerializationUtils.*;
 import org.dizitart.no2.objects.filters.ObjectFilters;
@@ -10,16 +9,10 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
-import spark.utils.IOUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 @WebSocket
 public class WebSocketHandler {

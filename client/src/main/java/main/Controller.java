@@ -18,7 +18,6 @@ import model.Message;
 import org.fxmisc.richtext.InlineCssTextArea;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;

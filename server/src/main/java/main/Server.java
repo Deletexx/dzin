@@ -4,27 +4,12 @@ import model.Message;
 import model.ServerResponse;
 import model.User;
 import static org.apache.commons.lang3.SerializationUtils.*;
-import org.dizitart.no2.Cursor;
-import org.dizitart.no2.Document;
 import org.dizitart.no2.Nitrite;
-import org.dizitart.no2.NitriteCollection;
-import org.dizitart.no2.mapper.JacksonMapper;
-import org.dizitart.no2.mapper.NitriteMapper;
-import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.dizitart.no2.objects.filters.ObjectFilters;
-import org.dizitart.no2.sync.data.InfoResponse;
-import org.eclipse.jetty.util.HostMap;
 import org.eclipse.jetty.websocket.api.Session;
-import org.json.simple.JSONObject;
-
-import java.io.Serializable;
-import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static org.apache.commons.codec.digest.DigestUtils.sha256Hex;
-import static org.dizitart.no2.Document.createDocument;
 
 
 import static spark.Spark.*;

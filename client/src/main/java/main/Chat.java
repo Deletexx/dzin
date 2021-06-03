@@ -7,7 +7,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-import java.util.LinkedList;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Chat {
